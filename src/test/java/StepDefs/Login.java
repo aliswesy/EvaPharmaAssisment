@@ -11,11 +11,11 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class Login {
-    static String email = "";
-    static String password = "";
-    static String firstName = "";
-    static String LastName = "";
-    static String phone = "";
+    static String email = "tomsmith@teml.net";
+    static String password = "AA0123456789BB--";
+    static String firstName = "tom";
+    static String LastName = "smith";
+    static String phone = "1012345678";
 
     public static WebDriver driver = new ChromeDriver();
     static MainPage mainPage = new MainPage();
@@ -43,13 +43,34 @@ public class Login {
         registerPage.emailInput(driver).sendKeys(email);
         registerPage.continueBtn(driver).click();
 
+        //Create password
         registerPage.passwordInput(driver).sendKeys(password);
         registerPage.confirmPasswordInput(driver).sendKeys(password);
-        registerPage.continueBtn2(driver).click();
+        Thread.sleep(1_000);
+        registerPage.continueBtnPassword(driver).click();
 
+        //Input Name And Phone number
         registerPage.firstNameInput(driver).sendKeys(firstName);
         registerPage.lastNameInput(driver).sendKeys(LastName);
         registerPage.phoneInput(driver).sendKeys(phone);
+        Thread.sleep(1_000);
+        registerPage.continueBtnNameAndPhone(driver).click();
+
+
+        //Select gender and Date of Birth
+        Thread.sleep(1_000);
+        registerPage.genderDropDown(driver).click();
+        registerPage.genderSelect(driver).click();
+
+        registerPage.dateOfBirth(driver).click();
+        registerPage.dateOfBirth(driver).sendKeys("10");
+        registerPage.dateOfBirth(driver).sendKeys("9");
+        registerPage.dateOfBirth(driver).sendKeys(Keys.ARROW_RIGHT);
+        registerPage.dateOfBirth(driver).sendKeys("1995");
+        registerPage.acceptTC(driver).click();
+        Thread.sleep(1_000);
+        registerPage.continueBtnGender(driver).click();
+
     }
 
     @AfterTest

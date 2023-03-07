@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class RegisterPage {
-//    WebDriver driver = Login.driver;
+    MainPage mainPage = new MainPage();
 
     public WebElement emailInput(WebDriver driver){
         return new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -21,9 +21,19 @@ public class RegisterPage {
         return driver.findElement(By.cssSelector("button[type=\"submit\"]"));
     }
 
-    public WebElement continueBtn2(WebDriver driver){
-        return new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(driver.findElement(By.cssSelector("button[type=\"button\"]"))));
+    public WebElement continueBtnPassword(WebDriver driver){
+        String className = "mdc-button mdc-button--touch mdc-button--raised to-personal-details mdc-ripple-upgraded";
+        return mainPage.classWebElement(driver, "button", className);
+    }
+
+    public WebElement continueBtnNameAndPhone(WebDriver driver){
+        String className = "mdc-button mdc-button--touch mdc-button--raised to-personal-details-part-2 mdc-ripple-upgraded";
+        return mainPage.classWebElement(driver, "button", className);
+    }
+
+    public WebElement continueBtnGender(WebDriver driver){
+        String className = "mdc-button mdc-button--touch mdc-button--raised to-verification-code create-account-button mdc-ripple-upgraded";
+        return mainPage.classWebElement(driver, "button", className);
     }
 
     public WebElement passwordInput(WebDriver driver){
@@ -48,5 +58,20 @@ public class RegisterPage {
         return driver.findElement(By.name("phone[number]"));
     }
 
+    public WebElement genderDropDown(WebDriver driver){
+        return new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(driver1 -> driver.findElement(By.id("gender")));
+    }
 
+    public WebElement genderSelect(WebDriver driver){
+        return driver.findElement(By.cssSelector("li[data-value=\"M\"]"));
+    }
+
+    public WebElement dateOfBirth(WebDriver driver){
+        return driver.findElement(By.id("input_birth_date"));
+    }
+
+    public WebElement acceptTC(WebDriver driver){
+        return driver.findElement(By.id("acceptTC"));
+    }
 }

@@ -8,12 +8,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class AddToCart {
 
 
-    static String email = "";
-    static String password = "";
+    static String email = "tomsmith@teml.net";
+    static String password = "AA0123456789BB--";
 
     static WebDriver driver = new ChromeDriver();
     static MainPage mainPage = new MainPage();
@@ -49,9 +50,34 @@ public class AddToCart {
         Thread.sleep(1_000);
         mainPage.shirtsCategoryClick(driver);
 
+        //Add first item to cart
         Thread.sleep(2_000);
-        mainPage.itemAddToCartBtn(driver, 1);
+        mainPage.SelectItem(driver, 0).click();
+        mainPage.itemAddToCartBtn(driver).click();
+        mainPage.selectVariationAddBtn(driver).click();
+        Thread.sleep(1_000);
+        driver.navigate().back();
 
+        //Add Second item to cart
+        mainPage.SelectItem(driver, 2).click();
+        mainPage.itemAddToCartBtn(driver).click();
+        mainPage.selectVariationAddBtn(driver).click();
+        Thread.sleep(1_000);
+        driver.navigate().back();
+
+        //Go to Shopping cart
+        mainPage.shoppingCartBtn(driver).click();
+        mainPage.increaseAmountBtn(driver).click();
+
+        //Assertion...
+        SoftAssert softAssert = new SoftAssert();
+
+        // Verify that the item is added to the cart successfully.
+        int actualItemCount = Integer.parseInt(mainPage.itemsCount(driver).getText());
+        softAssert.assertTrue(actualItemCount > 1);
+
+        // Verify that the subtotal is calculated correctly according to the added item prices.
+        softAssert.assertEquals(mainPage.subTotal(driver), mainPage.itemsPrice(driver));
     }
 
     @AfterTest
